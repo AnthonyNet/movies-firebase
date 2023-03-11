@@ -1,3 +1,4 @@
+import { projectFirestore } from './firebase/config';
 
 import './App.css';
 
