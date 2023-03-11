@@ -4,33 +4,31 @@ import './App.css';
 import { collection, getDocs } from "firebase/firestore";
 
 function App() {
-  const [movieList, setMovieList] = useState([])
+  const [movies, setMovies] = useState([])
   const [error, setError] = useState(false)
 
 // Get a list of cities from your database
 async function getMovies(db) {
   const moviesCol = collection(db, 'movies');
-  const citySnapshot = await getDocs(moviesCol);
-  const moviesList = citySnapshot.docs.map(doc => doc.data());
-  return moviesList;
+  const movieSnapshot = await getDocs(moviesCol);
+  const moviesList = movieSnapshot.docs.map(doc => doc.data());
+  return setMovies(moviesList);
 }
 
-getMovies()
-
-const pokus = async () => {
-  const movies = await getMovies(db)
-  console.log(movies)
-}
-pokus()
-
-
-
-
+getMovies(db)
 
 
   return (
     <div className="App">
-      <h1>Movie List</h1>
+    <h2>filmy</h2>
+    {movies.map((movie,index) => {
+        return (
+          <ul key={index}>
+            <li>Title:{movie.title}</li>
+            <li>Time:{movie.time}</li>
+            <li>Age required:{movie.minAge}</li>
+          </ul>
+        )})}
     </div>
   );
 }
